@@ -1,4 +1,4 @@
-#Comando para criar o secret no kubernets
+# Comando para criar o secret no kubernets
 
 kubectl create secret generic desafio-mysql-k8s --from-literal=password='asd123'
 
