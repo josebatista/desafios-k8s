@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-desafio-k8s
+spec: # spec do deployment
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-desafio-k8s
+      tier: db
+
+  template: # referente ao pod
+    metadata:
+      labels:
+        app: mysql-desafio-k8s
+        tier: db
+    spec: # spec do pod
+      containers:
+        - image: mysql:5.7
+          name: mysql-server
+
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: desafio-kysql-k8s
+                  key: password
+
+          ports:
+            - containerPort: 3306
