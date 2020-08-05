@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-default-page
+data:
+  index.html: |
+    Code.education Rocks
