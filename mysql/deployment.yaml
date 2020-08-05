@@ -23,8 +23,17 @@ spec: # spec do deployment
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: desafio-kysql-k8s
+                  name: desafio-mysql-k8s
                   key: password
 
           ports:
             - containerPort: 3306
+
+          volumeMounts:
+            - name: desafio-mysql-k8s-storage
+              mountPath: /var/lib/mysql
+
+      volumes:
+        - name: desafio-mysql-k8s-storage
+          persistentVolumeClaim:
+            claimName: mysql-desafio-k8s-pv-claim
