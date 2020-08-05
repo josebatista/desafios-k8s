@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-desafio-k8s
+spec: # spec do deployment
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-desafio-k8s
+  template:
+    metadata:
+      labels:
+        app: nginx-desafio-k8s
+    spec: # spec do pod
+      containers:
+        - name: nginx
+          image: nginx:1.19.1-alpine
+          ports:
+            - containerPort: 80
+
+          volumeMounts: # montando volume utilizando o configmap
+            - mountPath: /usr/share/nginx/html
+              name: nginx-config-index-volume
+              readOnly: true
+
+      volumes: # criando volume para modificar o index com base no configmap
+        - name: nginx-config-index-volume
+          configMap:
+            name: nginx-default-page
+            items:
+              - key: index.html
+                path: index.html
